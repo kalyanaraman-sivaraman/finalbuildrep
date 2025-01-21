@@ -1,0 +1,50 @@
+table course
+	lineageTag: 8263fa0b-ae5f-4fbd-966a-37f762f449e8
+
+	column 'Course id (course)'
+		dataType: string
+		lineageTag: d18e5b9e-423a-49b4-ad6c-fbfe04d44bf5
+		summarizeBy: none
+		sourceColumn: Course id (course)
+		annotation SummarizationSetBy = Automatic
+
+	column code
+		dataType: string
+		lineageTag: 0c3acb68-0ff9-40b0-9def-3671361d7cb6
+		summarizeBy: none
+		sourceColumn: code
+		annotation SummarizationSetBy = Automatic
+
+	column credits
+		dataType: int64
+		lineageTag: 24b57c67-3ec8-4d64-b8e2-bdbcc822f8e7
+		summarizeBy: none
+		sourceColumn: credits
+		annotation SummarizationSetBy = Automatic
+
+	column level
+		dataType: string
+		lineageTag: af291774-6a99-4461-8270-3852d4c2dd87
+		summarizeBy: none
+		sourceColumn: level
+		annotation SummarizationSetBy = Automatic
+
+	column Occupancy
+		dataType: int64
+		lineageTag: e436083e-6706-42d5-bca1-38ce17e23f5c
+		summarizeBy: none
+		sourceColumn: Occupancy
+		annotation SummarizationSetBy = Automatic
+
+    partition course = m
+        mode: import
+        source =
+                let
+                    Source = Databricks.Catalogs("adb-201068313543333.13.azuredatabricks.net", "/sql/1.0/warehouses/b0a66af24d7401a1", [Catalog="reportinghub", Database=null, EnableAutomaticProxyDiscovery=null]),
+                    reportinghub_Database = Source{[Name="reportinghub",Kind="Database"]}[Data],
+                    default_Schema = reportinghub_Database{[Name="default",Kind="Schema"]}[Data],
+                    course_Table = default_Schema{[Name="course",Kind="Table"]}[Data]
+                in
+                    course_Table
+
+    annotation PBI_ResultType = Table

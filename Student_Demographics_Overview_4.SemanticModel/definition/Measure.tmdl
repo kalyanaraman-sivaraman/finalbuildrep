@@ -1,0 +1,50 @@
+table Measure
+    lineageTag: 9f5e7412-0236-40bb-bd6b-03cc011ef8bd
+
+    measure 'Student count' =
+
+            Var A = DISTINCTCOUNT('student'[Student ID])
+            return A+0 
+        lineageTag: 47123998-6606-4e18-b1d6-e31d41570e6b
+
+    measure 'Tutors count' =
+
+            Var A = DISTINCTCOUNT('tutor'[tutor_id])
+            return A+0 
+        lineageTag: a3aacb1f-0707-48eb-a831-353f6ad7076d
+
+    measure 'Course offered' =
+
+            Var A = DISTINCTCOUNT('course'[Course id])
+            return A+0
+        lineageTag: b92180ae-51e0-4d3b-8594-fe227e0d9311
+
+    measure 'Avg Attendance %' =
+
+            Var A = AVERAGE(student[Attendance Percentage])
+            return A+0 
+        lineageTag: fc756522-c022-4186-9867-adaf4bb8ee17
+
+    measure 'Avg credits %' =
+
+            Var A = AVERAGE(course[credits])
+            return A+0 
+        lineageTag: 8c292c5f-2679-4aab-b009-e570135dffdd
+    column Column
+        dataType: double
+        formatString: #,0.00%;-#,0.00%;#,0.00%
+        lineageTag: b06e547d-ae89-48ef-9101-a36ed60310f6
+        summarizeBy: none
+        isNameInferred
+        sourceColumn: [Column]
+
+        annotation SummarizationSetBy = User
+
+    partition Measure = calculated
+        mode: import
+        source = Row("Column", BLANK())
+
+    annotation PBI_Id = 35e43472b79c47efb9bf240e6d624b06
+    
+    annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+    

@@ -1,0 +1,64 @@
+table student
+	lineageTag: 8d08f0de-8953-4b79-a9ec-5a25b7fab375
+
+	column 'Student ID'
+		dataType: string
+		lineageTag: 2f3084dd-6438-459b-b154-3683dccdf172
+		summarizeBy: none
+		sourceColumn: Student ID
+		annotation SummarizationSetBy = Automatic
+
+	column 'Course ID'
+		dataType: string
+		lineageTag: 84b00999-bdba-4c4d-817a-da026565cdb1
+		summarizeBy: none
+		sourceColumn: Course ID
+		annotation SummarizationSetBy = Automatic
+
+	column 'code (student)'
+		dataType: string
+		lineageTag: 21e316ca-8c4c-4ce1-912d-1b93715d2a38
+		summarizeBy: none
+		sourceColumn: code (student)
+		annotation SummarizationSetBy = Automatic
+
+	column 'Student Name'
+		dataType: string
+		lineageTag: 6181340b-ad54-4277-bd3c-5a5e8b576b15
+		summarizeBy: none
+		sourceColumn: Student Name
+		annotation SummarizationSetBy = Automatic
+
+	column 'Attendance Percentage'
+		dataType: int64
+		lineageTag: ae11ea5c-c65f-452c-9e7a-54794936c7b3
+		summarizeBy: none
+		sourceColumn: Attendance Percentage
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: e5c5b98f-c9ec-4369-84b0-1f600f396343
+		summarizeBy: none
+		sourceColumn: Gender
+		annotation SummarizationSetBy = Automatic
+
+	column CGPA
+		dataType: double
+		lineageTag: 64902bba-8fec-462f-ba31-3371ed6f3a0f
+		summarizeBy: none
+		sourceColumn: CGPA
+		annotation SummarizationSetBy = Automatic
+
+    partition student = m
+        mode: import
+        source =
+                let
+                    Source = Databricks.Catalogs("adb-201068313543333.13.azuredatabricks.net", "/sql/1.0/warehouses/b0a66af24d7401a1", [Catalog="reportinghub", Database=null, EnableAutomaticProxyDiscovery=null]),
+                    reportinghub_Database = Source{[Name="reportinghub",Kind="Database"]}[Data],
+                    default_Schema = reportinghub_Database{[Name="default",Kind="Schema"]}[Data],
+                    student_Table = default_Schema{[Name="student",Kind="Table"]}[Data]
+                in
+                    student_Table
+
+    annotation PBI_ResultType = Table
