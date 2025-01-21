@@ -1,0 +1,163 @@
+{
+  "compatibilityLevel": 1550,
+  "model": {
+    "annotations": [
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"Sheet1\"]"
+      },
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "1"
+      },
+      {
+        "name": "PBIDesktopVersion",
+        "value": "2.139.1678.0 (24.12)+2a034ab280bddf891eb7bb9ebfe6996f9c3a3196"
+      },
+      {
+        "name": "PBI_ProTooling",
+        "value": "[\"DevMode\"]"
+      }
+    ],
+    "culture": "en-US",
+    "cultures": [
+      {
+        "name": "en-US",
+        "linguisticMetadata": {
+          "content": {
+            "Language": "en-US",
+            "Version": "1.0.0"
+          },
+          "contentType": "json"
+        }
+      }
+    ],
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "Sheet1",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ],
+        "columns": [
+          {
+            "name": "URL",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataCategory": "WebUrl",
+            "dataType": "string",
+            "lineageTag": "a179eb3a-7e3a-4950-97b8-e1dfc0844997",
+            "sourceColumn": "URL",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Alternate Text",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "041ed78e-cb9c-4aa7-910f-026d422ce035",
+            "sourceColumn": "Alternate Text",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "b3edb8d2-c190-41c6-8e0c-10bbb2b406a5",
+        "partitions": [
+          {
+            "name": "Sheet1",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Excel.Workbook(File.Contents(\"C:\\Users\\SivachandranP\\OneDrive - AVA Software Pvt Ltd\\Desktop\\BI Resumes\\Hyperlink BI.xlsx\"), null, true),",
+                "    Sheet1_Sheet = Source{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data],",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(Sheet1_Sheet,{{\"Column1\", type text}, {\"Column2\", type text}}),",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(#\"Changed Type\", [PromoteAllScalars=true]),",
+                "    #\"Changed Type1\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"URL\", type text}, {\"Alternate Text\", type text}}),",
+                "    #\"Filtered Rows\" = Table.SelectRows(#\"Changed Type1\", each [URL] <> null and [URL] <> \"\")",
+                "in",
+                "    #\"Filtered Rows\""
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Parameter",
+        "annotations": [
+          {
+            "name": "PBI_Id",
+            "value": "55f254827c2b40d698bec59e4166705a"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Parameter",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ],
+            "dataType": "int64",
+            "extendedProperties": [
+              {
+                "name": "ParameterMetadata",
+                "type": "json",
+                "value": {
+                  "version": 0
+                }
+              }
+            ],
+            "formatString": "0",
+            "isDataTypeInferred": true,
+            "isNameInferred": false,
+            "lineageTag": "46b2de03-76cb-4c93-9bc3-1efe78cb986d",
+            "sourceColumn": "[Value]",
+            "summarizeBy": "none",
+            "type": "calculatedTableColumn"
+          }
+        ],
+        "lineageTag": "faf71f73-4bba-473a-8355-6afcf12f840e",
+        "measures": [
+          {
+            "name": "Parameter Value",
+            "expression": "SELECTEDVALUE('Parameter'[Parameter])",
+            "formatString": "0",
+            "lineageTag": "07536cfa-c053-4f0a-bb22-de7d8e953f18"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Parameter",
+            "mode": "import",
+            "source": {
+              "expression": "GENERATESERIES(1, 50, 1)",
+              "type": "calculated"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
